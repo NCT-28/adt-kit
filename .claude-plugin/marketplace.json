@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "adt-kit",
+  "description": "Token-frugal dev kit for Claude Code.",
+  "owner": {
+    "name": "Toàn Nguyễn",
+    "url": "https://github.com/REPLACE_WITH_GH_USER"
+  },
+  "plugins": [
+    {
+      "name": "adt-kit",
+      "description": "Context hooks + caveman mode + MCP routing + verify oracle.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}

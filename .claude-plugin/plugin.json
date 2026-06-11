@@ -1,0 +1,17 @@
+{
+  "name": "adt-kit",
+  "version": "0.1.0",
+  "description": "Token-frugal dev kit: context hooks, caveman default mode, MCP routing, and a verify boolean-oracle. Bundles this project's hooks + skills into one installable plugin.",
+  "author": {
+    "name": "Toàn Nguyễn",
+    "url": "https://github.com/REPLACE_WITH_GH_USER"
+  },
+  "hooks": "./hooks/hooks.json",
+  "mcpServers": {
+    "verify": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp/verify/server.mjs"]
+    }
+  },
+  "skills": "./skills/"
+}
