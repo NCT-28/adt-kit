@@ -114,8 +114,7 @@ test("hash-skip returns cached true when nothing changed", async () => {
   const first = await runCheck(dir);
   assert.equal(first.pass, true);
 
-  // Replace command with one that would fail — cache must intercept.
-  writeFileSync(join(dir, ".verify.json"), JSON.stringify({ command: "exit 1", cacheByHash: ["src.txt"] }));
+  // Keep same command and same watched files — cache must hit.
   const second = await runCheck(dir);
   assert.equal(second.pass, true);
   assert.equal(second.cached, true);
@@ -200,4 +199,14 @@ test("no prior PASS falls back to command when affectedCommand has <base>", asyn
   });
   const v = await runCheck(dir, "affected");
   assert.equal(v.pass, true); // fell back to command (exit 0), not affectedCommand with unresolved <base>
+});
+
+test("hash-skip re-runs when command changes even with non-empty cacheByHash", async () => {
+  const dir = gitProject({ command: "exit 0", cacheByHash: ["src.txt"] });
+  await runCheck(dir); // prime cache with command="exit 0"
+
+  // Different command, same staged index and same watched file.
+  writeFileSync(join(dir, ".verify.json"), JSON.stringify({ command: "exit 1", cacheByHash: ["src.txt"] }));
+  const v = await runCheck(dir);
+  assert.equal(v.pass, false); // command in key → cache miss even with globs present
 });

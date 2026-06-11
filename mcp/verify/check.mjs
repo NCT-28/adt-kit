@@ -68,11 +68,7 @@ function gitHeadCommit(projectDir) {
 
 function computeCacheKey(projectDir, cmd, globs) {
   const h = createHash("sha256");
-  // Include command in key only when no globs are watched; when globs are
-  // provided, the file fingerprints are the source of truth for invalidation.
-  if (!globs || globs.length === 0) {
-    h.update(`cmd:${cmd};`);
-  }
+  h.update(`cmd:${cmd};`);
   h.update(`lockfile:${lockfileFingerprint(projectDir)};`);
   h.update(`git:${gitIndexHash(projectDir)};`);
   for (const g of (globs || [])) {
