@@ -6,7 +6,6 @@
     "name": "Toàn Nguyễn",
     "url": "https://github.com/NCT-28"
   },
-  "hooks": "./hooks/hooks.json",
   "mcpServers": {
     "verify": {
       "command": "node",
