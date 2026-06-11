@@ -27,3 +27,12 @@ jq -n --arg ctx "$CONTEXT" '{
     additionalContext: $ctx
   }
 }'
+
+# --- adt-kit caveman per-turn reminder (self-contained) ---
+# Only remind if SessionStart already planted the directive (flag file exists).
+CAVEMAN_FLAG="${TMPDIR:-/tmp}/adt-kit-caveman-${CLAUDE_SESSION_ID:-default}"
+if [ -f "$CAVEMAN_FLAG" ]; then
+  CONFIG="${CLAUDE_PLUGIN_ROOT}/adt-kit.config.json"
+  CM_LEVEL="$(node -e "try{console.log(require('${CONFIG}').caveman.level)}catch(e){console.log('full')}" 2>/dev/null)"
+  printf 'CAVEMAN MODE ACTIVE (%s). Drop articles/filler/pleasantries/hedging. Fragments OK. Code/commits/security: write normal.\n' "$CM_LEVEL"
+fi
