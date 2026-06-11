@@ -26,3 +26,6 @@ if [ ! -f "$CAVEMAN_FLAG" ]; then
     printf 'CAVEMAN MODE ACTIVE (%s). Drop articles/filler/pleasantries/hedging. Fragments OK. Pattern: [thing] [action] [reason]. [next step]. EXCEPTIONS write normal prose: security warnings, irreversible-action confirmations, multi-step sequences where order risks misread, and all code/commit/PR text. User can say "stop caveman" / "normal mode" to disable this session.\n' "$CM_LEVEL"
   fi
 fi
+
+# --- adt-kit coding-guidelines discoverability ---
+printf 'adt-kit: coding-guidelines skill available (think-before-coding, simplicity, surgical changes, goal-driven verification). Invoke it before non-trivial code work.\n'
