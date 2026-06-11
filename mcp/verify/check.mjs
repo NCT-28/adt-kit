@@ -73,6 +73,11 @@ function computeCacheKey(projectDir, cmd, globs) {
   h.update(`git:${gitIndexHash(projectDir)};`);
   for (const g of (globs || [])) {
     const p = join(projectDir, g);
+    // Skip globs that resolve outside the project directory (path traversal guard).
+    if (!p.startsWith(projectDir + "/") && p !== projectDir) {
+      h.update(`${g}:traversal-blocked;`);
+      continue;
+    }
     try {
       const st = statSync(p);
       h.update(`${g}:${st.mtimeMs}:${st.size};`);

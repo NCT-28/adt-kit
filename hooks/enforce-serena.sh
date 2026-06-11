@@ -33,6 +33,6 @@ jq -n --arg ctx "$CONTEXT" '{
 CAVEMAN_FLAG="${TMPDIR:-/tmp}/adt-kit-caveman-${CLAUDE_SESSION_ID:-default}"
 if [ -f "$CAVEMAN_FLAG" ]; then
   CONFIG="${CLAUDE_PLUGIN_ROOT}/adt-kit.config.json"
-  CM_LEVEL="$(node -e "try{console.log(require('${CONFIG}').caveman.level)}catch(e){console.log('full')}" 2>/dev/null)"
+  CM_LEVEL="$(node -e "try{const c=JSON.parse(require('fs').readFileSync(process.env.ADT_CONFIG,'utf8'));console.log(c.caveman.level)}catch(e){console.log('full')}" ADT_CONFIG="${CONFIG}" 2>/dev/null)"
   printf 'CAVEMAN MODE ACTIVE (%s). Drop articles/filler/pleasantries/hedging. Fragments OK. Code/commits/security: write normal.\n' "$CM_LEVEL"
 fi
